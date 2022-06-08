@@ -17,104 +17,6 @@
 const unsigned int width = 800;
 const unsigned int height = 800;
 
-// Vertices coordinates
-GLfloat pyramid_vertices[] =
-{ //     COORDINATES     /        COLORS          /    TexCoord   /        NORMALS       //
-	-0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f, 	 0.0f, 0.0f,      0.0f, -1.0f, 0.0f, // Bottom side
-	-0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 0.0f, 5.0f,      0.0f, -1.0f, 0.0f, // Bottom side
-	 0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 5.0f,      0.0f, -1.0f, 0.0f, // Bottom side
-	 0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 0.0f,      0.0f, -1.0f, 0.0f, // Bottom side
-
-	-0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f, 	 0.0f, 0.0f,     -0.8f, 0.5f,  0.0f, // Left Side
-	-0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 0.0f,     -0.8f, 0.5f,  0.0f, // Left Side
-	 0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	 2.5f, 5.0f,     -0.8f, 0.5f,  0.0f, // Left Side
-
-	-0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 0.0f,      0.0f, 0.5f, -0.8f, // Non-facing side
-	 0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 0.0f, 0.0f,      0.0f, 0.5f, -0.8f, // Non-facing side
-	 0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	 2.5f, 5.0f,      0.0f, 0.5f, -0.8f, // Non-facing side
-
-	 0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 0.0f, 0.0f,      0.8f, 0.5f,  0.0f, // Right side
-	 0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 0.0f,      0.8f, 0.5f,  0.0f, // Right side
-	 0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	 2.5f, 5.0f,      0.8f, 0.5f,  0.0f, // Right side
-
-	 0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 0.0f,      0.0f, 0.5f,  0.8f, // Facing side
-	-0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f, 	 0.0f, 0.0f,      0.0f, 0.5f,  0.8f, // Facing side
-	 0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	 2.5f, 5.0f,      0.0f, 0.5f,  0.8f  // Facing side
-};
-
-GLfloat cube_vertices[] =
-{
-	//sciana dolna
-	-0.6f, -0.6f, -0.6f,	1.0f, 1.0f, 1.0f,	0.0f, 0.0f,		0.0f, 0.0f, -1.0f,
-	 0.6f, -0.6f, -0.6f,	1.0f, 1.0f, 1.0f,	1.0f, 0.0f,		0.0f, 0.0f, -1.0f,
-	 0.6f,  0.6f, -0.6f,	1.0f, 1.0f, 1.0f,	1.0f, 1.0f,		0.0f, 0.0f, -1.0f,
-	 0.6f,  0.6f, -0.6f,	1.0f, 1.0f, 1.0f,	1.0f, 1.0f,		0.0f, 0.0f, -1.0f,
-	-0.6f,  0.6f, -0.6f,	1.0f, 1.0f, 1.0f,	0.0f, 1.0f,		0.0f, 0.0f, -1.0f,
-	-0.6f, -0.6f, -0.6f,	1.0f, 1.0f, 1.0f,	0.0f, 0.0f,		0.0f, 0.0f, -1.0f,
-	//sciana gorna
-	-0.6f, -0.6f, 0.6f,		1.0f, 1.0f, 1.0f,	0.0f, 0.0f,		0.0f, 0.0f, 1.0f,
-	 0.6f, -0.6f, 0.6f,		1.0f, 1.0f, 1.0f,	1.0f, 0.0f,		0.0f, 0.0f, 1.0f,
-	 0.6f,  0.6f, 0.6f,		1.0f, 1.0f, 1.0f,	1.0f, 1.0f,		0.0f, 0.0f, 1.0f,
-	 0.6f,  0.6f, 0.6f,		1.0f, 1.0f, 1.0f,	1.0f, 1.0f,		0.0f, 0.0f, 1.0f,
-	-0.6f,  0.6f, 0.6f,		1.0f, 1.0f, 1.0f,	0.0f, 1.0f,		0.0f, 0.0f, 1.0f,
-	-0.6f, -0.6f, 0.6f,		1.0f, 1.0f, 1.0f,	0.0f, 0.0f,		0.0f, 0.0f, 1.0f,
-	//sciana tylna
-	-0.6f,  0.6f,  0.6f,	1.0f, 1.0f, 1.0f,	1.0f, 0.0f,		-1.0f, 0.0f, 0.0f,
-	-0.6f,  0.6f, -0.6f,	1.0f, 1.0f, 1.0f,	1.0f, 1.0f,		-1.0f, 0.0f, 0.0f,
-	-0.6f, -0.6f, -0.6f,	1.0f, 1.0f, 1.0f,	0.0f, 1.0f,		-1.0f, 0.0f, 0.0f,
-	-0.6f, -0.6f, -0.6f,	1.0f, 1.0f, 1.0f,	0.0f, 1.0f,		-1.0f, 0.0f, 0.0f,
-	-0.6f, -0.6f,  0.6f,	1.0f, 1.0f, 1.0f,	0.0f, 0.0f,		-1.0f, 0.0f, 0.0f,
-	-0.6f,  0.6f,  0.6f,	1.0f, 1.0f, 1.0f,	1.0f, 0.0f,		-1.0f, 0.0f, 0.0f,
-	//sciana przednia
-	0.6f,  0.6f,  0.6f,		1.0f, 1.0f, 1.0f,	1.0f, 0.0f,		1.0f, 0.0f, 0.0f,
-	0.6f,  0.6f, -0.6f,		1.0f, 1.0f, 1.0f,	1.0f, 1.0f,		1.0f, 0.0f, 0.0f,
-	0.6f, -0.6f, -0.6f,		1.0f, 1.0f, 1.0f,	0.0f, 1.0f,		1.0f, 0.0f, 0.0f,
-	0.6f, -0.6f, -0.6f,		1.0f, 1.0f, 1.0f,	0.0f, 1.0f,		1.0f, 0.0f, 0.0f,
-	0.6f, -0.6f,  0.6f,		1.0f, 1.0f, 1.0f,	0.0f, 0.0f,		1.0f, 0.0f, 0.0f,
-	0.6f,  0.6f,  0.6f,		1.0f, 1.0f, 1.0f,	1.0f, 0.0f,		1.0f, 0.0f, 0.0f,
-	//sciana lewa
-	-0.6f, -0.6f, -0.6f,	1.0f, 1.0f, 1.0f,	0.0f, 1.0f,		0.0f, -1.0f, 0.0f,
-	 0.6f, -0.6f, -0.6f,	1.0f, 1.0f, 1.0f,	1.0f, 1.0f,		0.0f, -1.0f, 0.0f,
-	 0.6f, -0.6f,  0.6f,	1.0f, 1.0f, 1.0f,	1.0f, 0.0f,		0.0f, -1.0f, 0.0f,
-	 0.6f, -0.6f,  0.6f,	1.0f, 1.0f, 1.0f,	1.0f, 0.0f,		0.0f, -1.0f, 0.0f,
-	-0.6f, -0.6f,  0.6f,	1.0f, 1.0f, 1.0f,	0.0f, 0.0f,		0.0f, -1.0f, 0.0f,
-	-0.6f, -0.6f, -0.6f,	1.0f, 1.0f, 1.0f,	0.0f, 1.0f,		0.0f, -1.0f, 0.0f,
-	//sciana prawa
-	-0.6f, 0.6f, -0.6f,		1.0f, 1.0f, 1.0f,	0.0f, 1.0f,		0.0f, 1.0f, 0.0f,
-	 0.6f, 0.6f, -0.6f,		1.0f, 1.0f, 1.0f,	1.0f, 1.0f,		0.0f, 1.0f, 0.0f,
-	 0.6f, 0.6f,  0.6f,		1.0f, 1.0f, 1.0f,	1.0f, 0.0f,		0.0f, 1.0f, 0.0f,
-	 0.6f, 0.6f,  0.6f,		1.0f, 1.0f, 1.0f,	1.0f, 0.0f,		0.0f, 1.0f, 0.0f,
-	-0.6f, 0.6f,  0.6f,		1.0f, 1.0f, 1.0f,	0.0f, 0.0f,		0.0f, 1.0f, 0.0f,
-	-0.6f, 0.6f, -0.6f,		1.0f, 1.0f, 1.0f,	0.0f, 1.0f,		0.0f, 1.0f, 0.0f
-};
-
-GLuint cube_indices[] =
-{
-	0, 1, 2,
-	3, 4, 5,
-	6, 7, 8,
-	9, 10, 11,
-	12, 13, 14,
-	15, 16, 17,
-	18, 19, 20,
-	21, 22, 23,
-	24, 25, 26,
-	27, 28, 29,
-	30, 31, 32,
-	33, 34, 35
-};
-
-// Indices for vertices order
-GLuint pyramid_indices[] =
-{
-	0, 1, 2, // Bottom side
-	0, 2, 3, // Bottom side
-	4, 6, 5, // Left side
-	7, 9, 8, // Non-facing side
-	10, 12, 11, // Right side
-	13, 15, 14 // Facing side
-};
-
 GLfloat lightVertices[] =
 { //     COORDINATES     //
 	-0.1f, -0.1f,  0.1f, //front lower-left
@@ -191,9 +93,9 @@ int main()
 	VAO VAO1;
 	VAO1.Bind();
 
-	VBO VBO1(cube_vertices, sizeof(cube_vertices));
+	VBO VBO1(menger.vertices, pow(20, menger.stage) * 396 * sizeof(float));
 	// Generates Element Buffer Object and links it to indices
-	EBO EBO1(cube_indices, sizeof(cube_indices));
+	EBO EBO1(menger.indices, pow(20, menger.stage) * 36 * sizeof(int));
 	// Links VBO attributes such as coordinates and colors to VAO
 	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 11 * sizeof(float), (void*)0);
 	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 11 * sizeof(float), (void*)(3 * sizeof(float)));
@@ -224,7 +126,7 @@ int main()
 
 
 	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-	glm::vec3 lightPos = glm::vec3(0.9f, 0.9f, 0.9f);
+	glm::vec3 lightPos = glm::vec3(1.2f, 1.2f, 1.2f);
 	glm::mat4 lightModel = glm::mat4(1.0f);
 	lightModel = glm::translate(lightModel, lightPos);
 
@@ -242,7 +144,7 @@ int main()
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
 	// Texture
-	Texture brickTex("metal_1.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	Texture brickTex("cube.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 	brickTex.texUnit(shaderProgram, "tex0", 0);
 
 	// Enables the Depth Buffer
@@ -278,7 +180,7 @@ int main()
 		// Draw primitives, number of indices, datatype of indices, index of indices
 		//glDrawElements(GL_TRIANGLES, sizeof(pyramid_indices) / sizeof(int), GL_UNSIGNED_INT, 0);
 
-		glDrawElements(GL_TRIANGLES, sizeof(cube_indices) / sizeof(int), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, pow(20, menger.stage) * 36, GL_UNSIGNED_INT, 0);
 		//glDrawArrays(GL_TRIANGLES, 0, 36);
 		// Tells OpenGL which Shader Program we want to use
 		lightShader.Activate();

@@ -91,21 +91,10 @@
     <None Include="light.vert">
       <Filter>Resource Files\light shaders</Filter>
     </None>
-    <None Include="test.frag">
-      <Filter>Resource Files\default shaders</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="cobble.png">
+    <Image Include="cube.png">
       <Filter>Resource Files\textures</Filter>
     </Image>
-    <Image Include="metal.png">
-      <Filter>Resource Files\textures</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="test.vert">
-      <Filter>Resource Files\default shaders</Filter>
-    </Text>
   </ItemGroup>
 </Project>

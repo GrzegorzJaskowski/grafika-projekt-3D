@@ -15,13 +15,12 @@ public:
 	float maxy;
 	float maxz;
 	GLfloat* vertices;
-	GLint* indices;
+	GLuint* indices;
 
 	mengerCube(int stage, float maxx, float maxy, float maxz);
 	void calculate_vertices();
 	void display_vertices();
-	float* create_cube(float front_z, float back_z, float right_x, float left_x, float top_y, float bottom_y);
-	void copy_cube(int cube_numer, float* vert);
+	void create_cube(float front_z, float back_z, float right_x, float left_x, float top_y, float bottom_y, int cube_number);
 };
 
 #endif
