@@ -10,18 +10,17 @@
 class mengerCube
 {
 public:
-	int stage;
-	float maxx;
-	float maxy;
-	float maxz;
+	int level;
+	int current_level;
+	float max_coord;
 	GLfloat* vertices;
 	GLuint* indices;
+	int cube_number;
 
-	mengerCube(int stage, float maxx, float maxy, float maxz);
+	mengerCube(int level, float max_coord);
 	void calculate_vertices();
-	void display_vertices();
-	void create_cube(float front_z, float back_z, float right_x, float left_x, float top_y, float bottom_y, int cube_number);
+	void create_cube(float front_z, float back_z, float right_x, float left_x, float top_y, float bottom_y);
+	void divide_cube(float x, float y, float z);
 };
 
 #endif
-

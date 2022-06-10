@@ -1,7 +1,88 @@
 #include "mengerCube.h"
 
-void mengerCube::create_cube(float right_x, float left_x, float top_y, float bottom_y, float front_z, float back_z, int cube_number)
+//dzielenie szeœcianu na mniejsze szeœciany
+void mengerCube::divide_cube(float x, float y, float z)
 {
+	float diff = abs(2 * max_coord) / pow(3,current_level);
+	create_cube(x, x - diff, y, y - diff, z, z - diff);
+	create_cube(x - diff, x - 2 * diff, y, y - diff, z, z - diff);
+	create_cube(x - 2 * diff, x-3*diff, y, y - diff, z, z - diff);
+
+	create_cube(x, x - diff, y - diff, y - 2 * diff, z, z - diff);
+	create_cube(x, x - diff, y - 2 * diff, y-3*diff, z, z - diff);
+
+	create_cube(x - 2 * diff, x-3*diff, y - diff, y - 2 * diff, z, z - diff);
+	create_cube(x - 2 * diff, x - 3 * diff, y - 2 * diff, y - 3 * diff, z, z - diff);
+
+	create_cube(x - diff, x - 2 * diff, y - 2 * diff, y - 3 * diff, z, z - diff);
+
+
+	create_cube(x - 2 * diff, x - 3 * diff, y - 2 * diff, y - 3 * diff, z - 2 * diff, z - 3 * diff);
+	create_cube(x - diff, x - 2 * diff, y - 2 * diff, y - 3 * diff, z - 2 * diff, z - 3 * diff);
+	create_cube(x, x - diff, y - 2 * diff, y - 3 * diff, z - 2 * diff, z - 3 * diff);
+
+	create_cube(x - 2 * diff, x - 3 * diff, y - diff, y - 2 * diff, z - 2 * diff, z - 3 * diff);
+	create_cube(x - 2 * diff, x - 3 * diff, y, y - diff, z - 2 * diff, z - 3 * diff);
+
+	create_cube(x, x - diff, y - diff, y - 2 * diff, z - 2 * diff, z - 3 * diff);
+	create_cube(x, x - diff, y, y - diff, z - 2 * diff, z - 3 * diff);
+
+	create_cube(x - diff, x - 2 * diff, y, y - diff, z - 2 * diff, z - 3 * diff);
+
+
+	create_cube(x, x - diff, y - 2 * diff, y - 3 * diff, z - diff, z - 2 * diff);
+	create_cube(x, x - diff, y, y - diff, z - diff, z - 2 * diff);
+
+	create_cube(x - 2 * diff, x - 3 * diff, y - 2 * diff, y - 3 * diff, z - diff, z - 2 * diff);
+	create_cube(x - 2 * diff, x - 3 * diff, y, y - diff, z - diff, z - 2 * diff);
+
+	//warunek iloœci iteracji algorytmu w zale¿noœci od obecnej i domyœlnej liczby iteracji
+	if(current_level < level)
+	{
+		if (pow(20, current_level) == cube_number)
+		{
+			current_level++;
+			cube_number = 0;
+		}
+		std::cout << "cur level = " << current_level << std::endl;
+
+		divide_cube(x, y, z);
+		divide_cube(x - diff, y, z);
+		divide_cube(x - 2 * diff, y, z);
+
+		divide_cube(x, y - diff, z);
+		divide_cube(x, y - 2 * diff, z);
+
+		divide_cube(x - 2 * diff, y - diff, z);
+		divide_cube(x - 2 * diff, y - 2 * diff, z);
+
+		divide_cube(x - diff, y - 2 * diff, z);
+
+
+		divide_cube(x - 2 * diff, y - 2 * diff, z - 2 * diff);
+		divide_cube(x - diff, y - 2 * diff, z - 2 * diff);
+		divide_cube(x, y - 2 * diff, z - 2 * diff);
+
+		divide_cube(x - 2 * diff, y - diff, z - 2 * diff);
+		divide_cube(x - 2 * diff, y, z - 2 * diff);
+
+		divide_cube(x, y - diff, z - 2 * diff);
+		divide_cube(x, y, z - 2 * diff);
+
+		divide_cube(x - diff, y, z - 2 * diff);
+
+
+		divide_cube(x, y - 2 * diff, z - diff);
+		divide_cube(x, y, z - diff);
+
+		divide_cube(x - 2 * diff, y - 2 * diff, z - diff);
+		divide_cube(x - 2 * diff, y, z - diff);
+	}
+}
+//funkcja wyznaczaj¹ca wspó³rzêdne trójk¹tów, z których sk³ada siê szeœcian
+void mengerCube::create_cube(float right_x, float left_x, float top_y, float bottom_y, float front_z, float back_z)
+{
+	//tworzenie lokalnej tablicy
 	GLfloat vert[] =
 	{
 		//back
@@ -47,7 +128,7 @@ void mengerCube::create_cube(float right_x, float left_x, float top_y, float bot
 		left_x, top_y, front_z,
 		left_x, top_y, back_z
 	};
-
+	//przepisywanie wspó³rzêdnich do w³aœciwej tablicy vertices
 	for (int i = 0; i < 36; i++)
 	{
 		for (int k = 0; k < 3; k++)
@@ -55,35 +136,43 @@ void mengerCube::create_cube(float right_x, float left_x, float top_y, float bot
 			vertices[i * 11 + k + cube_number * 396] = vert[i * 3 + k];
 		}
 	}
+	cube_number++;
 }
 
-mengerCube::mengerCube(int stage, float maxx, float maxy, float maxz)
+//konstruktor klasy mengerCube
+mengerCube::mengerCube(int level, float max_coord)
 {
-	this->stage = stage;
-	this->maxx = maxx;
-	this->maxy = maxy;
-	this->maxz = maxz;
-	vertices = new GLfloat[(size_t)(pow(20, stage) * 396)];
-	indices = new GLuint[(size_t)(pow(20, stage) * 36)];
-	for (int i = 0; i < pow(20, stage) * 36; i++)
+	//level, czyli iloœæ iteracji oraz, przy za³o¿eniu symetrycznoœci wzglêdem œrodka uk³adu, najwiêksza
+	//bezwzglêdna odleg³oœæ œrodka uk³adu na danej osi s¹ podawane przez u¿ytkownika
+	//kostka zaczyna od pierwszej iteracji usuwania œrodka szeœcianu
+	//cube_number to pomocnicza zmienna do uzupe³niania tablicy vertices
+	this->level = level;
+	this->current_level = 1;
+	this->max_coord = max_coord;
+	this->cube_number = 0;
+	vertices = new GLfloat[(size_t)(pow(20, level) * 396)];
+	indices = new GLuint[(size_t)(pow(20, level) * 36)];
+	for (int i = 0; i < pow(20, level) * 36; i++)
 		indices[i] = i;
+	std::cout << pow(20, level) * 396 / sizeof(float) << std::endl;
+	std::cout << pow(20, level) * 36 / sizeof(int);
 }
 
-
+//funkcja opowiadaj¹ca za uzupe³nienie tablicy vertices
 void mengerCube::calculate_vertices()
 {
-	
-	for (int i = 0; i < pow(20, stage) * 396; i++)
+	//domyœlne ustawienie wszystkich elementów tablicy vertices na 0.0f
+	for (int i = 0; i < pow(20, level) * 396; i++)
 		vertices[i] = 0.0f;
-
-	for (int i = 0; i < pow(20, stage) *36; i++)
+	//uzupe³nienie atrybutu kolorów
+	for (int i = 0; i < pow(20, level) *36; i++)
 	{
 		vertices[3 + 11 * i] = 1.0f;
 		vertices[4 + 11 * i] = 1.0f;
 		vertices[5 + 11 * i] = 1.0f;
 	}
-
-	for (int i = 0; i < pow(20, stage); i++)
+	//uzupe³nienie atrybutu tekstur
+	for (int i = 0; i < pow(20, level); i++)
 	{
 		for (int j = 0; j < 6; j++)
 		{
@@ -106,8 +195,8 @@ void mengerCube::calculate_vertices()
 			vertices[62 + 66 * j + 396 * i] = 0.0f;
 		}
 	}
-
-	for (int i = 0; i < pow(20, stage); i++)
+	//uzupe³nienie atrybutu normalnych
+	for (int i = 0; i < pow(20, level); i++)
 	{
 		for (int j = 0; j < 6; j++)
 		{
@@ -120,48 +209,5 @@ void mengerCube::calculate_vertices()
 		}
 	}
 
-	create_cube(0.6f, 0.2f, 0.6f, 0.2f, 0.6f, 0.2f, 0); //right top front
-	create_cube(0.2f, -0.2f, 0.6f, 0.2f, 0.6f, 0.2f, 1); //middle top front
-	create_cube(-0.2f, -0.6f, 0.6f, 0.2f, 0.6f, 0.2f, 2); // left top front
-
-	create_cube(0.6f, 0.2f, 0.2f, -0.2f, 0.6f, 0.2f, 3); //right middle front
-	create_cube(0.6f, 0.2f, -0.2f, -0.6f, 0.6f, 0.2f, 4); //right bottom front
-
-	create_cube(-0.2f, -0.6f, 0.2f, -0.2f, 0.6f, 0.2f, 5); // left middle front
-	create_cube(-0.2f, -0.6f, -0.2f, -0.6f, 0.6f, 0.2f, 6); // left bottom front
-
-	create_cube(0.2f, -0.2f, -0.2f, -0.6f, 0.6f, 0.2f, 7); //middle bottom front
-
-
-	create_cube(-0.2f, -0.6f, -0.2f, -0.6f, -0.2f, -0.6f, 8); //left bottom back
-	create_cube(0.2f, -0.2f, -0.2f, -0.6f, -0.2f, -0.6f, 9); //middle bottom back
-	create_cube(0.6f, 0.2f, -0.2f, -0.6f, -0.2f, -0.6f, 10); //right bottom back
-
-	create_cube(-0.2f, -0.6f, 0.2f, -0.2f, -0.2f, -0.6f, 11); //left middle back
-	create_cube(-0.2f, -0.6f, 0.6f, 0.2f, -0.2f, -0.6f, 12); //left top back
-
-	create_cube(0.6f, 0.2f, 0.2f, -0.2f, -0.2f, -0.6f, 13); //right middle back
-	create_cube(0.6f, 0.2f, 0.6f, 0.2f, -0.2f, -0.6f, 14); //right top back
-
-	create_cube(0.2f, -0.2f, 0.6f, 0.2f, -0.2f, -0.6f, 15); //middle bottom back
-
-
-	create_cube(0.6f, 0.2f, -0.2f, -0.6f, 0.2f, -0.2f, 16); //right bottom middle
-	create_cube(0.6f, 0.2f, 0.6f, 0.2f, 0.2f, -0.2f, 17); //right top middle
-
-	create_cube(-0.2f, -0.6f, -0.2f, -0.6f, 0.2f, -0.2f, 18); //left bottom middle
-	create_cube(-0.2f, -0.6f, 0.6f, 0.2f, 0.2f, -0.2f, 19); //left top middle
-}
-
-
-void mengerCube::display_vertices()
-{
-	//for (int i = 0; i < 36 * pow(20, stage); i++)
-	for (int i = 0; i < 36; i++)
-	{
-		std::cout << vertices[0 + 11 * i] << ",   " << vertices[1 + 11 * i] << ",   " << vertices[2 + 11 * i] << "\t"
-			<< vertices[3 + 11 * i] << ",   " << vertices[4 + 11 * i] << ",   " << vertices[5 + 11 * i] << "\t"
-			<< vertices[6 + 11 * i] << ",   " << vertices[7 + 11 * i] << "\t\t"
-			<< vertices[8 + 11 * i] << ",   " << vertices[9 + 11 * i] << ",   " << vertices[10 + 11 * i] << std::endl;
-	}
+	divide_cube(max_coord, max_coord, max_coord);
 }

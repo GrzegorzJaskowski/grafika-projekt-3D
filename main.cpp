@@ -77,15 +77,9 @@ int main()
 	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
 	glViewport(0, 0, width, height);
 
-
-
-	mengerCube menger(1, 0.6f, 0.6f, 0.6f);
+	// Stworzenie obiektu klasy mengerCube oraz obliczenie wspó³rzêdnych do tabeli vertices
+	mengerCube menger(3, 0.6f);
 	menger.calculate_vertices();
-	//menger.display_vertices();
-
-
-
-
 
 	// Generates Shader object using shaders default.vert and default.frag
 	Shader shaderProgram("default.vert", "default.frag");
@@ -93,9 +87,9 @@ int main()
 	VAO VAO1;
 	VAO1.Bind();
 
-	VBO VBO1(menger.vertices, pow(20, menger.stage) * 396 * sizeof(float));
+	VBO VBO1(menger.vertices, pow(20, menger.level) * 396 * sizeof(float));
 	// Generates Element Buffer Object and links it to indices
-	EBO EBO1(menger.indices, pow(20, menger.stage) * 36 * sizeof(int));
+	EBO EBO1(menger.indices, pow(20, menger.level) * 36 * sizeof(int));
 	// Links VBO attributes such as coordinates and colors to VAO
 	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 11 * sizeof(float), (void*)0);
 	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 11 * sizeof(float), (void*)(3 * sizeof(float)));
@@ -178,10 +172,7 @@ int main()
 		// Bind the VAO so OpenGL knows to use it
 		VAO1.Bind();
 		// Draw primitives, number of indices, datatype of indices, index of indices
-		//glDrawElements(GL_TRIANGLES, sizeof(pyramid_indices) / sizeof(int), GL_UNSIGNED_INT, 0);
-
-		glDrawElements(GL_TRIANGLES, pow(20, menger.stage) * 36, GL_UNSIGNED_INT, 0);
-		//glDrawArrays(GL_TRIANGLES, 0, 36);
+		glDrawElements(GL_TRIANGLES, pow(20, menger.level) * 36, GL_UNSIGNED_INT, 0);
 		// Tells OpenGL which Shader Program we want to use
 		lightShader.Activate();
 		// Export the camMatrix to the Vertex Shader of the light cube
