@@ -77,7 +77,7 @@ int main()
 	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
 	glViewport(0, 0, width, height);
 
-	// Stworzenie obiektu klasy mengerCube oraz obliczenie wspó³rzêdnych do tabeli vertices
+	// Stworzenie obiektu klasy mengerCube oraz obliczenie wspolrzednych do tabeli vertices
 	mengerCube menger(3, 0.6f);
 	menger.calculate_vertices();
 
