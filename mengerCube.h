@@ -22,5 +22,4 @@ public:
 	void create_cube(float front_z, float back_z, float right_x, float left_x, float top_y, float bottom_y);
 	void divide_cube(float x, float y, float z);
 };
-
 #endif

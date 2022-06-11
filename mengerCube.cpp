@@ -44,7 +44,6 @@ void mengerCube::divide_cube(float x, float y, float z)
 			current_level++;
 			cube_number = 0;
 		}
-		std::cout << "cur level = " << current_level << std::endl;
 
 		divide_cube(x, y, z);
 		divide_cube(x - diff, y, z);
@@ -142,8 +141,8 @@ void mengerCube::create_cube(float right_x, float left_x, float top_y, float bot
 //konstruktor klasy mengerCube
 mengerCube::mengerCube(int level, float max_coord)
 {
-	//level, czyli ilosæ iteracji oraz, przy zalozeniu symetrycznosci wzgledem srodka ukladu, najwieksza
-	//bezwzgledna odleglosæ srodka ukladu na danej osi sa podawane przez uzytkownika
+	//level, czyli ilosc iteracji oraz, przy zalozeniu symetrycznosci wzgledem srodka ukladu, najwieksza
+	//bezwzgledna odleglosc srodka ukladu na danej osi sa podawane przez uzytkownika
 	//kostka zaczyna od pierwszej iteracji usuwania srodka szescianu
 	//cube_number to pomocnicza zmienna do uzupelniania tablicy vertices
 	this->level = level;
@@ -154,8 +153,6 @@ mengerCube::mengerCube(int level, float max_coord)
 	indices = new GLuint[(size_t)(pow(20, level) * 36)];
 	for (int i = 0; i < pow(20, level) * 36; i++)
 		indices[i] = i;
-	std::cout << pow(20, level) * 396 / sizeof(float) << std::endl;
-	std::cout << pow(20, level) * 36 / sizeof(int);
 }
 
 //funkcja opowiadajaca za uzupelnienie tablicy vertices
